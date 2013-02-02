@@ -1,0 +1,9 @@
+fbusers
+
+Framework application that creates users based on facebook oauth.
+
+Enter your own   
+  FB_CLIENT_ID
+  FB_CLIENT_SECRET
+  
+in config/environments/<envfile>.rb
