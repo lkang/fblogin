@@ -13,14 +13,14 @@ class FbLoginsController < ApplicationController
     }
     url = URI.parse 'https://www.facebook.com/dialog/oauth'
     url.query = URI.encode_www_form opt
-    puts url.to_s
+    # puts url.to_s
     redirect_to  url.to_s
   end
   
   
   def post_oauth
     # receive the oauth code
-    puts "****** #{params.inspect}"
+    # puts "****** #{params.inspect}"
     opt = {
       :client_id => FB_CLIENT_ID,
       :client_secret => FB_CLIENT_SECRET,
@@ -39,9 +39,9 @@ class FbLoginsController < ApplicationController
         :client_id => FB_CLIENT_ID
       }
     }
-    puts "****** auth_opt: #{auth_opt.inspect}"
+    # puts "****** auth_opt: #{auth_opt.inspect}"
     rsp = FbClient.get( 'https://graph.facebook.com/me', auth_opt )
-    puts "****** rsp: #{rsp.inspect}"
+    # puts "****** rsp: #{rsp.inspect}"
     rsp = rsp.parsed_response
     
     u = User.where(:email => rsp["email"]).first || User.create(:email => rsp["email"], :password => 'fbpassword')
