@@ -29,7 +29,7 @@ Fblogin::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
-  FB_CLIENT_ID = "Your id"
-  FB_CLIENT_SECRET = "Your secret"
+  FB_CLIENT_ID = "your id"
+  FB_CLIENT_SECRET = "your secret"
 
 end

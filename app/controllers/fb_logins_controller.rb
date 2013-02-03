@@ -3,13 +3,7 @@ class FbLoginsController < ApplicationController
   class FbClient 
     include HTTParty
   end
-  
-  def new
-    # just show the button! actually dont even need this...
-    puts "****** the path is: #{post_oauth_fb_login_path}"
-    puts "****** the url is: #{post_oauth_fb_login_url}"
-  end
-  
+
   def create
     opt = {
       :client_id => FB_CLIENT_ID,
@@ -37,30 +31,21 @@ class FbLoginsController < ApplicationController
     rsp = FbClient.get( url.to_s, :query => opt )
 
     rsp_hash = CGI.parse rsp.parsed_response
-    session[:access_token] = rsp_hash
     
     # now get some basic user data
     auth_opt = {
       :query => {
-        :access_token => session[:access_token]["access_token"].first,
+        :access_token => rsp_hash["access_token"].first,
         :client_id => FB_CLIENT_ID
       }
     }
     puts "****** auth_opt: #{auth_opt.inspect}"
     rsp = FbClient.get( 'https://graph.facebook.com/me', auth_opt )
     puts "****** rsp: #{rsp.inspect}"
-    rsp_hash = rsp.parsed_response
-    session[:username] = rsp_hash["username"]
-    session[:name]     = rsp_hash["name"]
-    session[:fb_id]    = rsp_hash["id"]
+    rsp = rsp.parsed_response
+    
+    u = User.where(:email => rsp["email"]).first || User.create(:email => rsp["email"], :password => 'fbpassword')
+    sign_in u
     redirect_to root_path   
-  end
-  
-  def destroy
-    session[:username] = nil
-    session[:name] = nil
-    session[:fb_id] = nil
-    session[:access_token] = nil
-    redirect_to root_path
   end
 end
