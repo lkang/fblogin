@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Polit::Application.load_tasks
+Fblogin::Application.load_tasks

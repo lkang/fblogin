@@ -1,4 +1,4 @@
-Polit::Application.configure do
+Fblogin::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # In the development environment your application's code is reloaded on
@@ -28,10 +28,8 @@ Polit::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
-  
-  
+
   FB_CLIENT_ID = "Your id"
   FB_CLIENT_SECRET = "Your secret"
-  
-  
+
 end
